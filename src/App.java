@@ -1,21 +1,21 @@
 import processing.core.*;
 
 public class App extends PApplet {
-    int rectX = 225; // declaring the chicken's variables
-    int rectY = 470;
-    int rectWidth = 30;
-    int rectHeight = 30;
+    int chickenX = 225; // declaring the chicken's variables
+    int chickenY = 470;
+    int chickenWidth = 30;
+    int chickenHeight = 30;
     int speed = 10;
 
-    int pinkrectX = 0; // declaring the pink car's variables
-    int pinkrectY = 170;
-    int pinkrectWidth = 60;
-    int pinkrectHeight = 50;
+    int pinkcarX = 0; // declaring the pink car's variables
+    int pinkcarY = 170;
+    int pinkcarWidth = 60;
+    int pinkcarHeight = 50;
 
-    int yellowrectX = 450; // declaring the yellow car's variables
-    int yellowrectY = 255;
-    int yellowrectWidth = 60;
-    int yellowrectHeight = 50;
+    int yellowcarX = 450; // declaring the yellow car's variables
+    int yellowcarY = 255;
+    int yellowcarWidth = 60;
+    int yellowcarHeight = 50;
 
     int stage = 0; // there are 3 stages
     int score = 0; // for keeping track of the score
@@ -49,32 +49,32 @@ public class App extends PApplet {
         else if (stage == 1) { // game play screen
             drawBackground();
 
-            if (invincible == false && (touching(pinkrectX, pinkrectY) || touching(yellowrectX, yellowrectY))) {    // if either of the cars collide with the chicken and the "i" button isnt pressed, lose screen appears and car resets
+            if (invincible == false && (touching(pinkcarX, pinkcarY) || touching(yellowcarX, yellowcarY))) {    // if either of the cars collide with the chicken and the "i" button isnt pressed, lose screen appears and car resets
                 stage = 2;
                 resetCar();
-            } if (rectY < 145 && scorable == true) {  // if you cross the road the score increases by 1 at this certain point, and scorable resets
+            } if (chickenY < 145 && scorable == true) {  // if you cross the road the score increases by 1 at this certain point, and scorable resets
                 score++;
                 scorable = false;
-            } if (rectY <= 0) {   // when the chicken reaches the top of the screen, it resets to the bottom
+            } if (chickenY <= 0) {   // when the chicken reaches the top of the screen, it resets to the bottom
                 resetCar();
                 scorable = true;
             }
             pinkCar();  // draw pink car
             
-            if (pinkrectX > 500) {  // only allows it to move within the frame
-                pinkrectX = (int) random(-100, 0);  // car starts at a random point between these points off of the screen so the cars come at different times
+            if (pinkcarX > 500) {  // only allows it to move within the frame
+                pinkcarX = (int) random(-100, 0);  // car starts at a random point between these points off of the screen so the cars come at different times
             }
             yellowCar();    // draw yellow car
 
-            if (yellowrectX < 0) {  // only allows it to move within the frame
-                yellowrectX = (int) random(600, 500);   // car has a random starting point off screen so the cars come at different times
+            if (yellowcarX < 0) {  // only allows it to move within the frame
+                yellowcarX = (int) random(600, 500);   // car has a random starting point off screen so the cars come at different times
             }
             drawChicken();  // drawing the chicken square 
 
-            if (moveUp && rectY > 0)    // speed for the moving the chicken up
-                rectY -= speed;
-            if (moveDown && rectY + rectHeight < height)    // speed for moving the chicke down
-                rectY += speed;
+            if (moveUp && chickenY > 0)    // speed for the moving the chicken up
+                chickenY -= speed;
+            if (moveDown && chickenY + chickenHeight < height)    // speed for moving the chicke down
+                chickenY += speed;
         } 
             else if (stage == 2) {  // lose screen
             background(40, 100, 200);
@@ -91,27 +91,27 @@ public class App extends PApplet {
             stroke(0);  
             strokeWeight(1);
             fill(255, 105, 180);
-            rect(pinkrectX, pinkrectY, pinkrectWidth, pinkrectHeight);
-            pinkrectX += speed;
+            rect(pinkcarX, pinkcarY, pinkcarWidth, pinkcarHeight);
+            pinkcarX += speed;
     }
 
     public void yellowCar(){    // declaring the yellow car and its speed
             stroke(0);  
             strokeWeight(1);
             fill(255, 223, 0);
-            rect(yellowrectX, yellowrectY, yellowrectWidth, yellowrectHeight);
-            yellowrectX -= speed;
+            rect(yellowcarX, yellowcarY, yellowcarWidth, yellowcarHeight);
+            yellowcarX -= speed;
     }
 
     public void drawChicken(){  // declaring the chicken in the game
         stroke(0);  
         strokeWeight(1);
         fill(50, 110, 255);
-        rect(rectX, rectY, rectWidth, rectHeight);
+        rect(chickenX, chickenY, chickenWidth, chickenHeight);
     }
     public void resetCar() {    // resets the car back to starting position
-        rectX = 225;
-        rectY = 470;
+        chickenX = 225;
+        chickenY = 470;
     }
 
     public void drawBackground() {  // creates the road and grass on the play screen. also makes the score count appear in the corner
@@ -139,14 +139,14 @@ public class App extends PApplet {
 
     public boolean touching(int pinkrectX, int pinkrectY) { // declaring variables for car and chicken collision
         int carLeft = pinkrectX;
-        int carRight = pinkrectX + yellowrectWidth;
+        int carRight = pinkrectX + yellowcarWidth;
         int carTop = pinkrectY;
-        int carBottom = pinkrectY + yellowrectHeight;
+        int carBottom = pinkrectY + yellowcarHeight;
 
-        int ChickenLeft = rectX;
-        int ChickenRight = rectX + rectWidth;
-        int ChickenTop = rectY;
-        int ChickenBottom = rectY + rectHeight;
+        int ChickenLeft = chickenX;
+        int ChickenRight = chickenX + chickenWidth;
+        int ChickenTop = chickenY;
+        int ChickenBottom = chickenY + chickenHeight;
 
         if (carLeft < ChickenRight) {   // checking to see if the cars and chicken are overlapping
             if (carRight > ChickenLeft) {
